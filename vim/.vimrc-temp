@@ -1,0 +1,170 @@
+" enter the current millenium
+"set nocompatible
+
+" enable syntax plugin (for netrw)
+"syntax enable
+"filetype on
+
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=/Volumes/Data/.vim/bundles/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/Volumes/Data/.vim/bundles')
+  call dein#begin('/Volumes/Data/.vim/bundles')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Volumes/Data/.vim/bundles/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+"  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('mitsuse/autocomplete-swift')
+  call dein#add('vim-syntastic/syntastic')
+  call dein#add('kballard/vim-swift')
+  call dein#add('Shougo/neocomplete.vim')
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('flazz/vim-colorschemes')
+  call dein#add('mtth/scratch.vim')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('itchyny/lightline.vim')
+
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+"End dein Scripts-------------------------
+" STANDARD VIM SETTINGS:
+
+let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+
+set number
+set linespace=2
+set softtabstop=4
+set shiftwidth=4
+colorscheme molokai
+
+:set cursorline
+
+:au FocusLost * :set number
+:au FocusGained * :set relativenumber
+
+autocmd InsertEnter * :set number
+autocmd Insertleave * :set relativenumber
+
+" FINDING FILES: 
+"
+" Search down into subfolder
+" Provides tab-completion for all file-related tasks
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+
+" NOW WE CAN: 
+" - Hit tab to :find by partial match
+" - User * to make it fuzzy
+
+" THINGS TO CONSIDER: 
+" - :b lets you autocomplete any open buffer
+
+" TAG JUMPING:
+
+" Create the 'tags' file
+command! MakeTags !ctags -R --exclude=.git --exclude=log * .
+
+" NOW WE CAN:
+" - Use ^] to  jump to tag under cursor
+" - User g^] for ambigous tags
+" - User ^t to jump back up the tag stack
+
+" THINGS TO CONSIDER: 
+" - This doesn't help if you want a visual list of tags
+
+" AUTOCOMPLETE:
+
+" The good stuff is documented in |ins-completion|
+
+" HIGHLIGHTS:
+" - ^x^n for JUST this file
+" - ^x^f for filenames (works with our path trick!)
+" - ^x^] for tags only
+" - ^n for anything specified by the 'complete' option
+
+" NOW WE CAN:
+" - User ^n and ^p to fo back and forth in the suggestion list
+
+" Swift file recognition:
+autocmd BufNewFile,BufRead *.swift set filetype=swift
+"
+" End Standard Vim settings
+
+" For the LightLine.vim plugin 
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+" End of LightLine.vim plugin
+
+" For Autocomplete-swift:
+" jump to the first placeholder by typing `<C-k>`
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Swift-vim
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" Swift-vim

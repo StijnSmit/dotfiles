@@ -1,0 +1,152 @@
+
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=/Volumes/Data/.config/nvim/plugin/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/Volumes/Data/.config/nvim/plugin')
+  call dein#begin('/Volumes/Data/.config/nvim/plugin')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Volumes/Data/.config/nvim/plugin/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+"End dein Scripts-------------------------
+
+
+" ale
+" language checker
+"call dein#add('w0rp/ale')
+
+" swiftlang
+"call dein#add('Shougo/deoplete.nvim')
+"if !has('nvim')
+"  call dein#add('roxma/nvim-yarp')
+"  call dein#add('roxma/vim-hug-neovim-rpc')
+"endif
+call dein#add('mitsuse/autocomplete-swift')
+call dein#add('landaire/deoplete-swift')
+call dein#add('kballard/vim-swift')
+call dein#add('keith/swift.vim')
+call dein#add('aciidb0mb3r/SwiftDoc.vim')
+call dein#add('cfdrake/ultisnips-swift')
+
+" quickrun
+call dein#add('thinca/vim-quickrun')
+
+" colorscheme
+call dein#add('chriskempson/base16-vim')
+call dein#add('morhetz/gruvbox')
+call dein#add('ryanoasis/vim-devicons')
+
+" colorscheme --------------------------------- {{{
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+set background=dark
+if has("gui_vimr")
+  colorscheme base16-default-dark
+else
+  "colorscheme Tomorrow-Night
+  colorscheme gruvbox
+endif
+" }}}
+
+" ctags for swift ---------------------------- {{{
+let g:tagbar_type_swift = {
+  \ 'ctagstype': 'swift',
+  \ 'kinds' : [
+    \ 'e:Enums',
+    \ 't:Typealiases',
+    \ 'p:Protocols',
+    \ 's:Structs',
+    \ 'c:Classes',
+    \ 'f:Functions',
+    \ 'v:Variables',
+    \ 'E:Extensions',
+    \ 'l:Constants',
+  \ ],
+  \ 'sort' : 0
+  \ }
+" }}}
+
+" swiftformat ---------------------------- {{{
+  nnoremap <leader>F :!swiftformat %<cr>
+" }}}
+
+" swift command --------------------------- {{{
+au FileType swift nmap <leader>r :QuickRun swiftrun<cr>
+au FileType swift nmap <leader>t :QuickRun swifttest<cr>
+" }}}
+
+" autocomplete for swift ------------------- {{{
+autocmd FileType swift imap <buffer> <C-k> <Plug>(autocomplete_swift_jump_to_placeholder)
+" }}}
+
+" CLighter Xcode --------------------------- {{{
+" Config for CLighter
+if has('nvim')
+    let g:clamp_autostart = 1
+    let g:clamp_libclang_file = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib'
+else
+    let g:clighter8_autostart = 1
+    let g:clighter8_libclang_file = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib'
+  endif
+" }}}
+
+" swift source_kitten ---------------------- {{{
+let g:deoplete#sources#swift#source_kitten_binary = '/usr/local/bin/sourcekitten'
+let g:deoplete#sources#swift#daemon_autostart = 1
+" }}}
+
+" statusline ------------------------------- {{{
+set statusline=...%{MyGitStatus()}...
+
+function MyGitStatus() abort
+  let staged = gina#component#status#staged()
+  let unstaged = gina#component#status#unstaged()
+  let conflicted = gina#component#status#conflicted()
+  let branched = gina#component#repo#branch()
+  return printf(
+        \ 'b: %s, s: %s, u: %s, c: %s',
+        \ branched,
+        \ staged,
+        \ unstaged,
+        \ conflicted,
+        \)
+endfunction
+"set statusline=
+set statusline=[%n]\                           "buffernr
+set statusline+=%<%F\                          "File+path
+set statusline+=%y\                            "FileType
+set statusline+=%{ALEGetStatusLine()}\         "ale status"
+"set statusline+=%{fugitive#statusline()}\      "fugitive#statusline"
+set statusline+=%{MyGitStatus()}
+set statusline+=%=                             "right alignment
+set statusline+=[%{strlen(&fenc)?&fenc:&enc}]  "file encoding
+set statusline+=%-16(\ %l,%c-%v\ %)\%P         "cursor row, col, Percentage
+" }}}

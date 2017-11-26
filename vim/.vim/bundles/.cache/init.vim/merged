@@ -1,0 +1,2 @@
+100
+['/Volumes/Data/.vim/bundles/repos/github.com/Shougo/dein.vim', 'Shougo/deoplete.nvim', 'Shougo/neocomplete.vim', 'Shougo/neosnippet-snippets', 'Shougo/neosnippet.vim', 'Shougo/vimshell', 'flazz/vim-colorschemes', 'itchyny/lightline.vim', 'kballard/vim-swift', 'mitsuse/autocomplete-swift', 'mtth/scratch.vim', 'scrooloose/nerdtree', 'vim-syntastic/syntastic']
