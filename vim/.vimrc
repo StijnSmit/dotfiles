@@ -1,5 +1,5 @@
 " Plug - Packet Manager ----------------->
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/dotfiles/vim/.vim/plugged')
 
 " language checker
 Plug 'w0rp/ale'
@@ -11,6 +11,8 @@ Plug 'mitsuse/autocomplete-swift'
 Plug 'keith/swift.vim'
 Plug 'aciidb0mb3r/SwiftDoc.vim'
 Plug 'kballard/vim-swift'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'euclio/vim-markdown-composer'
 
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -125,3 +127,5 @@ set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
 " }}}
+"
+let vim_markdown_preview_github=1

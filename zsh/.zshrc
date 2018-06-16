@@ -2,12 +2,16 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/dotfiles/zsh/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="gianu"
+#ZSH_THEME="gianu"
+ZSH_THEME="agnoster"
 # The ones I liked "gianu", "mh", "michelebologna", "philips", "pygmalion"
 #. /usr/local/lib/python3.6/site-packages/powerline/bindings/rc/powerline.rc
 
@@ -91,3 +95,4 @@ source $ZSH/oh-my-zsh.sh
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+DEFAULT_USER="stijnsmit"
