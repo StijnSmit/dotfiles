@@ -16,6 +16,7 @@
 	tree = log --graph --full-history --all --color --date=short --pretty=format:\"%Cred%x09%h %Creset%ad%Cblue%d %Creset %s %C(bold)(%an)%Creset\"
 	upstream = "!git push --set-upstream origin $(git branch-name)"
 	rdev = "!f() { git fetch $@ && git merge remotes/origin/dev; }; f"
+	url = config --get remote.origin.url
 
 	# ------ From Online ------- #
 	# Get the current branch name (not so useful in itself, but used in
@@ -75,4 +76,3 @@
 	# Delete any branches that have been merged into master
 	# See also: https://gist.github.com/robmiller/5133264
 	delete-merged-branches = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-	url = config --get remote.origin.url
