@@ -2,6 +2,6 @@
 My public dotfiles
 
 Contains: 
--ZSH
--VIM
--TMUX
+-git
+-nvim
+-kitty
